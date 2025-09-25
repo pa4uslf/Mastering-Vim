@@ -1,0 +1,53 @@
+" Scope practice file
+echom "scope_test.vim sourced!"
+
+" 1. Global and Script scope
+let g:my_global_var = "I am global"
+let s:my_script_var = "I am script-local"
+
+echom "From inside script:"
+echom "g:my_global_var = " . g:my_global_var
+echom "s:my_script_var = " . s:my_script_var
+
+" 注：在vimscript中，`echom`用于在函数/脚本运行后输出对应信息，保存文件后，只需要使用`:so %`执行脚本，就会自动输出结果。
+
+" 使用`let`给非内部变量赋值，然后就可以将变量用于脚本中的其他地方。其中，`g`定义的是全局变量/函数，`s`定义的是脚本内部变量，全局变量除了可以在脚本中使用，还可以在命令模式中引用（只需要使用`:echo`命令即可），而脚本内部变量无法在脚本之外使用，因此无法在命令模式中引用。
+
+" 2. Function and Argument scope
+function! s:TestScope(name)
+    let l:my_local_var = 'Hello'
+    echom "--- Inside Function ---"
+    echom "Param (a:name): " . a:name
+    echom "Local (l:my_local_var): " . l:my_local_var
+    echom "Global (g:my_global_var): " . g:my_global_var
+    echom "Script (s:my_script_var): " . s:my_script_var
+    echom "--- End of Function ---"
+endfunction
+
+command! RunScopeTest call s:TestScope("Frank")
+
+" 注：使用`function!`定义了一个名为TestScope的函数，函数接受传入的姓名参数，并在运行后输出整体框架、姓名、局部变量、全局变量、脚本变量。
+"
+" 如果使用`:echo`命令，可以输出全局变量g:my_global_var，但是无法输出姓名a:name、局部变量l:my_local_var和脚本变量s:my_script_var。
+
+" 3. Buffer scope
+let b:my_buffer_var = "This is for buffer " . bufnr('%')
+
+" 注：使用`b`定义缓冲区变量（这个变量只能在当前缓冲区使用，使用`:new`创建新缓冲区后，无法引用该变量）
+"
+" 只需要使用`:echo b:my_buffer_var`即可输出`This is for buffer `及缓冲区编号
+
+" 4. Window and Tab scope
+let w:my_window_var = "Window " . winnr()
+let t:my_tab_var = "Tab " . tabpagenr()
+
+" 注：如果在当前窗口（创建并运行该文件的窗口）运行`:echo w:my_window_var`，会输出"Window 1"，运行`:echo t:my_tab_var`会输出"Tab 1"。
+"
+" 但是如果使用`:sp`创建水平分割窗口，在新窗口（上面的窗口）中运行`:echo w:my_window_var`会提示变量未定义，运行`:echo t:my_tab_var`依旧输出"Tab 1"。
+"
+" 如果使用`:tabnew`创建新标签页，然后在新标签页中运行`:echo t:my_tab_var`，会提示变量不存在。
+
+" 5. v: scope
+" v:是Vim自己定义的全局变量，使用这个变量不需要构建函数，直接在命令模式中使用`:echo`命令即可。
+" 例如使用`:echo v:version`可以查看vim版本（901代表9.0.1版本），使用`:echo v:errmsg`查看上一条报错信息。
+" 由于v:变量为只读变量，使用`:let v:version=901`会报错。
