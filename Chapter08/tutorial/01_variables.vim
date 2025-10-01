@@ -18,3 +18,6 @@ let @a = 'cats are weird'
 let &ignorecase = 0
 
 let g:cat_statement = g:animal_name . ' is a cat'
+
+echom g:animal_name . " is an animal"
+echom "Yet another message"
