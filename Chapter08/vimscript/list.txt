@@ -1,0 +1,27 @@
+" 定义animals列表，并给该列表添加元素
+let animals = ['cat', 'dog', 'parrot']
+
+let cat = animals[0]
+let dog = animals[1]
+let parrot = animals[-1]
+
+let slice = animals[1:]
+let slice = animals[0:1]
+
+call add(animals, 'octopus')
+" let animals = add(animals, 'octopus')
+
+call insert(animals, 'bobcat')
+call insert(animals, 'raven', 2)
+
+" animals列表的内容为['bobcat', 'cat', 'raven', 'dog', 'parrot', 'octopus']
+
+" 从animals列表中删除元素
+unlet animals[2]    " 列表元素变成了['bobcat', 'cat', 'dog', 'parrot', 'octopus']
+
+call remove(animals, -1)    " ['bobcat', 'cat', 'dog', 'parrot']
+
+let bobcat = remove(animals, 0) " animals列表第一个元素被移除，并赋值给bobcat变量
+
+unlet animals[:1]   " 将列表第二个元素及其前面的元素移除
+call remove(animals, 0, 1)  " 如果使用remove移除，需要指定移除区间
