@@ -1,0 +1,5 @@
+function! AnimalGreeting(...)
+    echo a:1 . ' says hi to ' . a:2
+endfunction
+
+call AnimalGreeting('cat', 'dog')

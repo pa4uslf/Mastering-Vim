@@ -1,0 +1,5 @@
+function ListArgs(...)
+    echo a:000
+endfunction
+
+call ListArgs('cat', 'dog', 'parrot')
