@@ -1,0 +1,15 @@
+function! s:AnimalGreeting(animal_param)
+    let l:animal = 'cat'
+    echo l:animal . ' says hi!'
+endfunction
+
+function! s:AnimalGreeting(animal_param)
+    let l:animal = 'dog'
+    return l:animal . ' says hello!'
+endfunction
+
+echo s:AnimalGreeting('any animal')
+
+" 两个函数的参数都定义为animal_param，并且在函数内部使用`l`定义为局部变量，以便能够在函数内部对其进行修改。使用`echo`输出的结果为第二个函数的输出结果，因为第一个函数的输出结果被覆盖了。
+
+" 如果把第二个函数中的return修改为echo，虽然还是会输出正确内容，但是函数外部的echo语句就没有存在意义了，输出为0。

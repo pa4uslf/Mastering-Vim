@@ -1,0 +1,5 @@
+function AnimalGreeting(animal, ...)
+    echo a:animal . ' says hi to ' . a:1
+endfunction
+
+call AnimalGreeting('cat', 'octopus')
